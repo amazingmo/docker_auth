@@ -442,7 +442,7 @@ func (as *AuthServer) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 	case req.URL.Path == path_prefix+"/auth":
 		as.doAuth(rw, req)
 	case req.URL.Path == path_prefix+"/google_auth" && as.ga != nil:
-		as.ga.DoGoogleAuth(rw, req)
+		as.ga.DoGoogleAuth(rw, req, path_prefix)
 	case req.URL.Path == path_prefix+"/github_auth" && as.gha != nil:
 		as.gha.DoGitHubAuth(rw, req)
 	case req.URL.Path == path_prefix+"/oidc_auth" && as.oidc != nil:
@@ -461,7 +461,7 @@ func (as *AuthServer) doIndex(rw http.ResponseWriter, req *http.Request) {
 	case as.ga != nil:
 		rw.Header().Set("Content-Type", "text/html; charset=utf-8")
 		fmt.Fprintf(rw, "<h1>%s</h1>\n", as.config.Token.Issuer)
-		fmt.Fprint(rw, `<p><a href="/google_auth">Login with Google account</a></p>`)
+		fmt.Fprintf(rw, `<p><a href="%s/google_auth">Login with Google account</a></p>`, as.config.Server.PathPrefix)
 	case as.gha != nil:
 		url := as.config.Server.PathPrefix + "/github_auth"
 		http.Redirect(rw, req, url, 301)

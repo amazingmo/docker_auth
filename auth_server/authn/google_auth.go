@@ -141,9 +141,9 @@ func NewGoogleAuth(c *GoogleAuthConfig) (*GoogleAuth, error) {
 	}, nil
 }
 
-func (ga *GoogleAuth) DoGoogleAuth(rw http.ResponseWriter, req *http.Request) {
+func (ga *GoogleAuth) DoGoogleAuth(rw http.ResponseWriter, req *http.Request, pp string) {
 	if req.Method == "GET" {
-		ga.doGoogleAuthPage(rw, req)
+		ga.doGoogleAuthPage(rw, req, pp)
 		return
 	}
 	gauthRequest, _ := ioutil.ReadAll(req.Body)
@@ -166,8 +166,12 @@ func (ga *GoogleAuth) DoGoogleAuth(rw http.ResponseWriter, req *http.Request) {
 	}
 }
 
-func (ga *GoogleAuth) doGoogleAuthPage(rw http.ResponseWriter, req *http.Request) {
-	if err := ga.tmpl.Execute(rw, struct{ ClientId string }{ClientId: ga.config.ClientId}); err != nil {
+func (ga *GoogleAuth) doGoogleAuthPage(rw http.ResponseWriter, req *http.Request, pp string) {
+	if err := ga.tmpl.Execute(rw,
+		struct {
+			ClientId string
+			Prefix   string
+		}{ClientId: ga.config.ClientId, Prefix: pp}); err != nil {
 		http.Error(rw, fmt.Sprintf("Template error: %s", err), http.StatusInternalServerError)
 	}
 }
