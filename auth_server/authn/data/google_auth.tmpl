@@ -42,7 +42,7 @@
 				console.log(authResult);
 				$.ajax({
 					type: 'POST',
-					url: '/google_auth',
+					url: '{{.Prefix}}/google_auth',
 					contentType: 'application/json; charset=utf-8',
 					processData: false,
 					data: JSON.stringify({'action': 'sign_in', 'code': authResult['code']}),
@@ -68,7 +68,7 @@
 				// Perform server-side sign out.
 				$.ajax({
 					type: 'POST',
-					url: '/google_auth',
+					url: '{{.Prefix}}/google_auth',
 					contentType: 'application/json; charset=utf-8',
 					data: JSON.stringify({'action': 'sign_out', 'token': id_token}),
 					processData: false,

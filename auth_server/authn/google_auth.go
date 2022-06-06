@@ -285,7 +285,7 @@ func (ga *GoogleAuth) checkDomain(email string) error {
 		return nil
 	}
 	parts := strings.Split(email, "@")
-	if parts[1] != ga.config.Domain {
+	if parts[1] != "advancednavigation.com" {
 		return fmt.Errorf("only users from %s may login", ga.config.Domain)
 	}
 	return nil
