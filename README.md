@@ -1,5 +1,8 @@
+DO NOT USE THIS PROJECT
+=======================
+
 Docker Registry 2 authentication server
-=========================================
+---------------------------------------
 
 The original Docker Registry server (v1) did not provide any support for authentication or authorization.
 Access control had to be performed externally, typically by deploying Nginx in the reverse proxy mode with Basic or other type of authentication.
